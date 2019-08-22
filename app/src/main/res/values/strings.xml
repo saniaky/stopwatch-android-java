@@ -17,7 +17,7 @@
     <string name="ALARM">Alarm!</string>
     <string name="WAITING">Waiting</string>
     <string name="BUTTON_ADD_SECOND">Add second</string>
-    <string name="BUTTON_STOP_TIMER">Stop tiemr</string>
+    <string name="BUTTON_STOP_TIMER">Stop timer</string>
     <string name="BUTTON_STOP_ALARM">Stop alarm</string>
 
 </resources>
