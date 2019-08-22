@@ -6,16 +6,18 @@
     <string name="title_activity_main">Loyola CS 313/413 Stopwatch</string>
 
     <!-- view strings -->
-    <string name="startStop">Start/Stop</string>
-    <string name="resetLap">Reset/Lap</string>
-    <string name="minutes">00</string>
-    <string name="seconds">00</string>
-    <string name="colon">:</string>
+    <string name="startStop">Add second / Stop timer</string>
+    <string name="seconds" translatable="false">00</string>
 
     <!-- model state display names -->
     <string name="STOPPED">Stopped</string>
     <string name="RUNNING">Running</string>
     <string name="LAP_RUNNING">Lap/Running</string>
     <string name="LAP_STOPPED">Lap/Stopped</string>
+    <string name="ALARM">Alarm!</string>
+    <string name="WAITING">Waiting</string>
+    <string name="BUTTON_ADD_SECOND">Add second</string>
+    <string name="BUTTON_STOP_TIMER">Stop tiemr</string>
+    <string name="BUTTON_STOP_ALARM">Stop alarm</string>
 
 </resources>

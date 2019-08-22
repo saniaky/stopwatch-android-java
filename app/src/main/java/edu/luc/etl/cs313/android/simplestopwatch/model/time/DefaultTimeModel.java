@@ -1,38 +1,67 @@
 package edu.luc.etl.cs313.android.simplestopwatch.model.time;
 
-import static edu.luc.etl.cs313.android.simplestopwatch.common.Constants.*;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import edu.luc.etl.cs313.android.simplestopwatch.model.clock.OnTickListener;
 
 /**
  * An implementation of the stopwatch data model.
  */
 public class DefaultTimeModel implements TimeModel {
 
-    private int runningTime = 0;
+    private Timer timer;
+    private int runningTime;
+    private OnTickListener listener;
 
-    private int lapTime = -1;
+    public DefaultTimeModel() {
+        runningTime = 0;
+    }
+
+    public void setListener(OnTickListener listener) {
+        this.listener = listener;
+    }
 
     @Override
-    public void resetRuntime() {
+    public void start() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                listener.onTick();
+            }
+        }, 1000, 1000);
+    }
+
+    @Override
+    public void stop() {
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+
+    @Override
+    public void resetTime() {
         runningTime = 0;
     }
 
     @Override
-    public void incRuntime() {
-        runningTime = (runningTime + SEC_PER_TICK) % SEC_PER_HOUR;
+    public void incTime() {
+        if (runningTime <= 99) {
+            runningTime++;
+        }
     }
 
     @Override
-    public int getRuntime() {
+    public void decTime() {
+        if (runningTime > 0) {
+            runningTime--;
+        }
+    }
+
+    @Override
+    public int getTime() {
         return runningTime;
     }
 
-    @Override
-    public void setLaptime() {
-        lapTime = runningTime;
-    }
-
-    @Override
-    public int getLaptime() {
-        return lapTime;
-    }
 }

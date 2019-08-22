@@ -11,5 +11,7 @@ import edu.luc.etl.cs313.android.simplestopwatch.common.StopwatchUIListener;
  * @author laufer
  */
 public interface StopwatchModelFacade extends StopwatchUIListener, StopwatchUIUpdateSource {
+
     void onStart();
+
 }

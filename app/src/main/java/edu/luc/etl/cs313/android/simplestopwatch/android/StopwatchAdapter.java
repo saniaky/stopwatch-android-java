@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Locale;
+
 import edu.luc.etl.cs313.android.simplestopwatch.R;
-import edu.luc.etl.cs313.android.simplestopwatch.common.Constants;
 import edu.luc.etl.cs313.android.simplestopwatch.common.StopwatchUIUpdateListener;
 import edu.luc.etl.cs313.android.simplestopwatch.model.ConcreteStopwatchModelFacade;
 import edu.luc.etl.cs313.android.simplestopwatch.model.StopwatchModelFacade;
@@ -35,7 +38,7 @@ public class StopwatchAdapter extends Activity implements StopwatchUIUpdateListe
         // inject dependency on view so this adapter receives UI events
         setContentView(R.layout.activity_main);
         // inject dependency on model into this so model receives UI events
-        this.setModel(new ConcreteStopwatchModelFacade());
+        this.setModel(new ConcreteStopwatchModelFacade(getApplicationContext()));
         // inject dependency on this into model to register for UI updates
         model.setUIUpdateListener(this);
     }
@@ -56,38 +59,38 @@ public class StopwatchAdapter extends Activity implements StopwatchUIUpdateListe
 
     /**
      * Updates the seconds and minutes in the UI.
-     * @param time
+     *
+     * @param seconds
      */
-    public void updateTime(final int time) {
+    public void updateTime(final int seconds) {
         // UI adapter responsibility to schedule incoming events on UI thread
         runOnUiThread(() -> {
-            final TextView tvS = (TextView) findViewById(R.id.seconds);
-            final TextView tvM = (TextView) findViewById(R.id.minutes);
-            final int seconds = time % Constants.SEC_PER_MIN;
-            final int minutes = time / Constants.SEC_PER_MIN;
-            tvS.setText(Integer.toString(seconds / 10) + Integer.toString(seconds % 10));
-            tvM.setText(Integer.toString(minutes / 10) + Integer.toString(minutes % 10));
+            final TextView tvS = findViewById(R.id.seconds);
+            tvS.setText(String.format(Locale.US, "%02d", seconds));
         });
     }
 
     /**
      * Updates the state name in the UI.
+     *
      * @param stateId
+     * @param buttonId
      */
-    public void updateState(final int stateId) {
+    @Override
+    public void updateState(final int stateId, int buttonId) {
         // UI adapter responsibility to schedule incoming events on UI thread
         runOnUiThread(() -> {
-            final TextView stateName = (TextView) findViewById(R.id.stateName);
+            final TextView stateName = findViewById(R.id.stateName);
             stateName.setText(getString(stateId));
+
+            final Button buttonView = findViewById(R.id.multiButton);
+            buttonView.setText(getString(buttonId));
         });
     }
 
     // forward event listener methods to the model
-    public void onStartStop(final View view) {
-        model.onStartStop();
+    public void onButtonClick(final View view) {
+        model.onButtonClick();
     }
 
-    public void onLapReset(final View view)  {
-        model.onLapReset();
-    }
 }

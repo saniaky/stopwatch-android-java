@@ -9,6 +9,9 @@ import edu.luc.etl.cs313.android.simplestopwatch.model.clock.OnTickListener;
  * @author laufer
  */
 interface StopwatchState extends StopwatchUIListener, OnTickListener {
-    void updateView();
-    int getId();
+
+    int getStateId();
+
+    int getButtonId();
+
 }
